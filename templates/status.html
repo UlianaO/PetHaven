@@ -1,0 +1,26 @@
+{% extends 'myaccount.html' %}
+
+{% block title %} Home {% endblock %}
+
+{% block pet %}
+
+<div class="container py-5">
+<div class="container rounded border border-dark border-1 justify-content-center" style="width: 85%; ">
+    <div class="text-left py-4">
+      <p style="font-size: 18px; "> Hello, <b>{{user_name[0]}}</b>!  Thank you for your interest in {{pet_name[0]}} 💜 </p>
+    </div>
+    <div class=" row justify-content-md-center" style="width: 50%; ">
+        <div class="col">
+            <p> The Status of Your Application: </p>
+        </div>
+        <div class="col">
+            <p style="font-size: 20px; color: #1C658C; "> staTus</p>
+        </div>
+    </div>
+    <div>
+
+    </div>
+</div>
+    </div>
+
+{% endblock %}

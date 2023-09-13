@@ -1,0 +1,222 @@
+{% extends 'myaccount.html' %}
+
+{% block title %} Home {% endblock %}
+
+{% block pet %}
+<div class="container" style="width: 90%; ">
+    <div class="row">
+        <div class="col md-12">
+            <div class="jumbotron p-3">
+                <h2> Manage <b> Pets   </b>
+                  <button type="button" class = "btn btn-outline-secondary float-end editbtn" data-toggle="modal" data-target="#mymodal"> Add new pet </button> 
+                </h2>
+
+                <!-- Allow user to search pet by inputting name/letter which the name of the pet starts with -->
+                <div>
+                  <!-- Will show all pets -->
+                  <a href="/managepets" class="hide-link">
+                     <button type="button" class = "btn btn-outline-secondary float-end editbtn smallButton">Reset</button> 
+                  </a>
+                  <form method="POST">
+                     <input type="text" class="float-end searchboxName" name="searchName" placeholder="Search name...">
+                  </form>
+               </div> 
+                {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                {% for message in messages %}
+                <div class="alert alert-warning alert-dismissible fade show text-center" role="alert">
+                  <p><strong>Holy cat`amole! {{ message }}</strong></p>
+                  <button type="button" class="btn-close float-end" data-dismiss="alert" aria-label="Close">
+                  </button>
+                {% endfor %}
+                {% endif %}
+                {% endwith %}
+                 </div>
+                <!-- Creating a table to display database-->
+                <table class="table table-hover table-light text-center tablehover">
+                    <tr>
+                        <th>PET ID</th>
+                        <th>Type</th>
+                        <th>Name</th>
+                        <th>Sex</th>
+                        <th>Date of Birth</th>
+                        <th>Date of Intake</th>
+                        <th style="width: 30%">Description</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                    <!-- FOR LOOP TO LIST ALL PETS -->
+                    {% for pet in all_pets %}
+                    <tr>
+                        <td> {{ pet['pid'] }} </td>
+                        <td> {{ pet['type'] }} </td>
+                        <td> {{ pet['pname'] }} </td>
+                        <td> {{ pet['sex'] }}</td>
+                        <td> {{ pet['dob'] }} </td>
+                        <td> {{ pet['dateofintake'] }} </td>
+                        <td> {{ pet['description'] }} </td>
+                        <td> {{ pet['status'] }} </td>
+
+                        <td>
+                            <!-- ADD PET ID AND EXTRA ROUTES -->
+                            <a href="/update/{{pet['pid']}}" class="btn btn-warning btn-xs editbtn" data-bs-toggle="modal" data-bs-target="#modaledit{{pet['pid']}}"> Edit </a>
+                            <a href="/delete/{{pet['pid']}}" class="btn btn-warning btn-xs editbtn" onclick="return confirm('Are you sure you want to delete?')"> Delete</a>
+                        </td>
+
+                    </tr>
+
+
+<!------- EDIT PET -->
+<!----- INSERT PET ID INTO THE MODALEDIT --->
+<div id="modaledit{{pet['pid']}}" class="modal fade" role="dialog">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+           <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+            <h4 class="modal-title text-center">Update Information</h4>
+         </div>
+         <div class="modal-body">
+             <!-- FORM ACTIONNNN-->
+            <form action="{{ url_for('update') }}" method="POST" enctype="multipart/form-data">
+               <div class="form-group">
+                   <!-- CAN`T CHANGE ID -->
+                  <label>PETID:</label>
+                   <input type="hidden" name="pid" value="{{ pet['pid'] }}">
+                  <input type="text" readonly class="form-control-plaintext" name="pid" value="{{ pet['pid'] }}" >
+               </div>
+                <!------------------only choices are: Cat, Dog, Other -------------------- -->
+               <div class="form-group">
+                 <label >Type</label>
+                    <select class="form-control" name = 'type'>
+                     <option>Cat</option>
+                     <option>Dog</option>
+                     <option>Other</option>
+                    </select>
+               </div>
+                <div class="form-group">
+                  <label>Name:</label>
+                  <input type="text" class="form-control" name="name" value="{{ pet['pname'] }}" >
+               </div>
+                <div class="form-group">
+                 <label>Type</label>
+                    <select class="form-control" name = 'sex'>
+                     <option>M</option>
+                     <option>F</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                  <label>Date of Birth:</label>
+                  <input type="date" class="form-control" name="dob" value="{{ pet['dob'] }}" >
+               </div>
+                <div class="form-group">
+                  <label>Date of Intake:</label>
+                  <input type="date" class="form-control" name="dateofintake" value="{{ pet['dateofintake'] }}" >
+               </div>
+                <div class="form-group">
+                  <label>Description:</label>
+                  <input type="text" class="form-control" name="description" value="{{ pet['description'] }}" >
+               </div>
+                <br>
+                <div class="form-group">
+                    <label> Image: </label>
+                    <div class="d-flex justify-content-center">
+                        <img class="" src="static/images/{{pet['image']}}" style="width: 40%; ">
+                    </div>
+                    <br>
+                    <input type="file" name="image" class="form-control" aria-label="image" value="{{ pet['image'] }}">
+                </div>
+                <br>
+                <button class="btn btn-primary editbtn float-end" type="submit">Update</button>
+            </form>
+         </div>
+
+      </div>
+   </div>
+</div>
+                    {% endfor %}
+
+<!------------------------------------------------------------ -->
+<!------------------------------------------------------------ -->
+                </table>
+            </div>
+
+<!-- ADD NEW PET -->
+
+ <div id="mymodal" class="modal fade" role="dialog">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+           <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+            <h4 class="modal-title text-center">New Pet Information</h4>
+         </div>
+         <div class="modal-body">
+             <!-- ADD is a route in app.pu -->
+            <form action=" {{ url_for('add') }}" method="POST" enctype="multipart/form-data">
+               <div class="form-group">
+                  <label>Name:</label>
+                  <input type="text" class="form-control" name="name"  >
+               </div>
+                <br>
+<!------------------only choices are: Cat, Dog, Other -------------------- -->
+                <div class="form-group">
+                 <label for="exampleFormControlSelect1">Type</label>
+                    <select class="form-control" name = 'type' id="exampleFormControlSelect1">
+                     <option>Cat</option>
+                     <option>Dog</option>
+                     <option>Other</option>
+                    </select>
+                 </div>
+                <!--
+                <div class="form-group">
+                  <label>Type:</label>
+                  <input type="text" class="form-control" name="type"  >
+               </div> -->
+                <br>
+                <div class="form-group">
+                 <label for="exampleFormControlSelect2">Type</label>
+                    <select class="form-control" name = 'sex' id="exampleFormControlSelect2">
+                     <option>M</option>
+                     <option>F</option>
+                    </select>
+                </div>
+                <br>
+                <div class="form-group">
+                  <label>Date of Birth:</label>
+                  <input type="date" class="form-control" name="dob"  >
+               </div>
+                <br>
+                <div class="form-group">
+                  <label>Date of Intake:</label>
+                  <input type="date" class="form-control" name="dateofintake" >
+               </div>
+                <br>
+                <div class="form-group">
+                  <label>Description:</label>
+                    <textarea class="form-control" name="description"></textarea>
+               </div>
+                <br>
+                <div class="input-group">
+                    <input type="file" name="image" class="form-control" id="image" aria-describedby="inputGroupFileAddon04" aria-label="image">
+                    <button class="btn btn-outline-secondary" type="button" id="imagebtn">Button</button>
+                </div>
+                <br>
+                <button class="btn btn-outline-secondary float-end" type="submit">Add</button>
+
+            </form>
+         </div>
+
+         <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+         </div>
+      </div>
+   </div>
+</div>
+
+<!------------------------------------------------------------ -->
+
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

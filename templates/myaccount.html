@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% block title %} Home {% endblock %}
+
+{% block content %}
+
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+  <li class="nav-item" role="presentation">
+    {%if privilage%}
+     
+    {%else%}
+    <a class="nav-link" href="/status" id="status-tab" type="button" role="tab" aria-controls="status" aria-selected="false">My Status</a>
+    {%endif%}
+  </li>
+  <li class="nav-item" role="presentation">
+    {%if privilage%}
+      <a class="nav-link" href="/managepets" id="home-tab" type="button" role="tab" aria-controls="home" aria-selected="true">Pets</a>
+    {%endif%}
+  </li>
+  <li class="nav-item" role="presentation">
+    {%if privilage%}
+    <a class="nav-link" href="/managevolunteers" id="profile-tab" type="button" role="tab" aria-controls="profile" aria-selected="false">Volunteers</a>
+    {%endif%}
+  </li>
+  <li class="nav-item" role="presentation">
+    {%if privilage%}
+    <a class="nav-link" href="/manageadopters" id="adopter-tab" type="button" role="tab" aria-controls="adopter" aria-selected="false">Adopters</a>
+    {%endif%}
+  </li>
+  <li class="row nav-item " role="presentation">
+    <div class=" col">
+      {%if privilage%}
+      <a class="nav-link" href="/manageapplications" id="contact-tab"  type="button" role="tab" aria-controls="contact" aria-selected="false">Applicants</a>
+      {%endif%}
+    </div>
+    <div class="col py-2 ">
+      <!-- CODE AMOUNT OF APPLICANTS -->
+      <span class="badge bg-warning rounded-pill ">{{numInQueue}}</span>
+    </div>
+     </li>
+</ul>
+<div class="tab-content" id="myTabContent">
+    <div class="tab-pane fade show active" id="status" role="tabpanel" aria-labelledby="status-tab">
+      {% block status %}
+      {% endblock %}
+  </div>
+  <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+      {% block pet %}
+      {% endblock %}
+  </div>
+  <div class="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+    {% block vol %}
+      {% endblock %}
+  </div>
+  <div class="tab-pane fade show active" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+    {% block app %}
+      {% endblock %}
+  </div>
+</div>
+
+<script>
+  $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+    var hash = $(e.target).attr("href");
+    $('.nav a').filter('a[href="'+hash+'"]').tab('show');
+});
+</script>
+
+{% endblock %}

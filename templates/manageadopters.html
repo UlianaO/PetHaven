@@ -1,0 +1,58 @@
+{% extends 'myaccount.html' %}
+
+{% block title %} Home {% endblock %}
+
+{% block app %}
+
+<!-- Used similar code from manageapplications -->
+<div class="container" style="width: 90%; ">
+    <div class="row">
+        <div class="col md-12">
+            <div class="jumbotron p-3">
+                <h2> Manage <b> Adopters </b></h2>
+
+                <!-- Allow user to search pet/adopter by inputting name/letter which the name of the pet/adopter starts with -->
+                <div>
+                    <!-- Will show all pets -->
+                    <a href="/manageadopters" class="hide-link">
+                       <button type="button" class = "btn btn-outline-secondary float-end editbtn smallButton">Reset</button> 
+                    </a>
+                    <form method="POST">
+                       <input type="text" class="float-end searchboxName" name="searchNames" placeholder="Search name...">
+                    </form>
+                 </div>
+
+                <br>
+                <!-- Creating a table to display adopters info -->
+                <table class="table table-hover table-light text-center tablehover">
+                    <tr>
+                        <th>Adopter ID</th>
+                        <th>Pet Name</th>
+                        <th>Name</th>
+                        <th>Phone</th>
+                        <th>Employment</th>
+                        <th>DOB</th>
+                        <th>Date of Adoption</th>
+                    </tr>
+                    <!-- List all adopters -->
+                    {% for applicant in allAdopters %}
+                    <tr>
+                        <td> {{ applicant['id'] }} </td>
+                        <td> {{ applicant['pname'] }} </td>
+                        <td> {{ applicant['name'] }} </td>
+                        <td> {{ applicant['phone'] }}</td>
+                        <td> {{ applicant['employment'] }} </td>
+                        <td> {{ applicant['dob'] }} </td>
+                        <td> {{ applicant['dateOfAdoption'] }} </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+         </div>
+      </div>
+</div>
+
+
+
+
+{% endblock %}

@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% block title %} Home {% endblock %}
+
+{% block content %}
+
+<p class="text-center">Please, fill out the application below to adopt a pet. </p>
+
+<div class="container" style="width: 50%; background-color: #fffff0; ">
+    <!-- IT IS REGISTERING THE USER!!! ACTION PARAMETER IMPORTANT -->
+<form class="p-3" action="/adopt/{{single_pet['pid']}}" method="POST">
+    <div class="mb-2" style="font-size: 20px; ">
+        <label for="name" class="form-label">You are applying for: &ensp; <b>{{ single_pet['pname'] }} </b> </label>
+    </div>
+    <br>
+    <div class="mb-2">
+        <label for="name" class="form-label">Name</label>
+        <input type="text" class="form-control" id="name" name="name">
+    </div>
+    <div class="mb-2">
+        <!-- FORMAT IT DOB!!!! -->
+        <label for="name" class="form-label">DOB: </label>
+        <input type="date" class="form-control" id="dob" name="dob">
+    </div>
+    <div class="mb-2">
+        <label for="name" class="form-label">Phone</label>
+        <input type="text" class="form-control" id="phone" name=phone>
+    </div>
+    <div class="mb-2">
+        <label for="name" class="form-label">Address</label>
+        <input type="text" class="form-control" id="address" name="address">
+    </div>
+    <div class="mb-2">
+        <label for="name" class="form-label">Employment</label>
+        <input type="text" class="form-control" id="employment" name="employment">
+    </div>
+    <div class="mb-2">
+        <label for="name" class="form-label">Why do you want to adopt? </label>
+        <textarea  class="form-control" id="reason" name="reason"></textarea>
+    </div>
+    <br>
+    <div class="py-2">
+        <h5> Create login credentials: </h5><br>
+    </div>
+    <div class="mb-2">
+        <label for="email" class="form-label">Email</label>
+        <input type="email" class="form-control" id="email" aria-describedby="emailHelp" name="email" >
+    </div>
+    <div class="mb-2">
+        <label for="email" class="form-label">Passwordl</label>
+        <input type="password" class="form-control" id="password"  name="password" >
+    </div>
+    <div class="py-3">
+        <h6> By submitting your application, you are creating an account with us to track the status of your application.<br>
+        Just log in to see the status and call us back so we know you are serious! </h6>
+    </div>
+    <div>
+        <button type="submit" class="btn m-8 editbtn float-end" >Submit Application</button>
+    </div>
+    </form>
+    <br>
+    <br>
+    <br>
+    <br>
+</div>
+
+{% endblock %}

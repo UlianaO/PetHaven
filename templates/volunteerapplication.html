@@ -1,0 +1,32 @@
+{% extends 'adoptionapplication.html' %}
+{% block title %} Home {% endblock %}
+
+{% block content %}
+
+<p class="text-center"> YOU READY TO START SAVING LIVES BY VOLUNTEERING? 🐈 </p>
+<p class="text-center"><b> Apply below!!! :) </b></p>
+
+<div class="container" style="width: 75%; ">
+<form class="p-3" action="" method="POST">
+    <div class="mb-2">
+        <label for="name" class="form-label">Name</label>
+        <input type="text" class="form-control" id="name" name="name">
+    </div>
+    <div class="mb-2">
+        <label for="email" class="form-label">Email</label>
+        <input type="email" class="form-control" id="email" name="email">
+    </div>
+    <div class="mb-2">
+        <label for="name" class="form-label">Phone</label>
+        <input type="text" class="form-control" id="phone" name="email">
+    </div>
+    <div class="mb-2">
+        <label for="email" class="form-label">Address</label>
+        <input type="email" class="form-control" id="address" name="address">
+    </div>
+    <br>
+    <button type="submit" class="btn m-8 editbtn" >Submit Application</button>
+</form>
+</div>
+
+{% endblock %}

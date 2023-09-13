@@ -1,0 +1,157 @@
+{% extends 'base.html' %}
+{% block title %} Home {% endblock %}
+
+{% block content %}
+<div class="">
+  <h3 class="" style="padding: 20px; text-align: center"> Welcome to Pet Haven of Tampa area! Visit us at our adoption center! </h3>
+</div>
+
+<!-- Filter buttons -->
+<div style="text-align:center; margin-left: 14%; margin-right: 14%">
+  <a href="cats" class="hide-link">
+    <button class="btn mb-2 editbtn" style="margin-right: 1%; text-decoration: none;">Cats</button>
+  </a>
+
+  <a href="dogs" class="hide-link">
+    <button class="btn mb-2 editbtn" style="margin-right: 1%">Dogs </button>
+  </a>
+
+  <a href="otherPets" class="hide-link">
+    <button class="btn mb-2 editbtn" style="margin-right: 1%">Other Pets</button>
+  </a>
+
+  <a href="femalePets" class="hide-link">
+    <button class="btn mb-2 editbtn" style="margin-right: 1%">Female pets</button>
+  </a>
+
+  <a href="malePets" class="hide-link">
+    <button class="btn mb-2 editbtn" style="margin-right: 1%">Male pets</button>
+  </a>
+
+  <a href="babyPets" class="hide-link">
+    <button class="btn mb-2 editbtn" style="margin-right: 1%">Baby</button>
+  </a>
+
+  <a href="youngPets" class="hide-link">
+    <button class="btn mb-2 editbtn" style="margin-right: 1%">Young</button>
+  </a>
+
+  <a href="adultPets" class="hide-link">
+    <button class="btn mb-2 editbtn" style="margin-right: 1%">Adult</button>
+  </a>
+
+  <a href="seniorPets" class="hide-link">
+    <button class="btn mb-2 editbtn" style="margin-right: 1%">Senior</button>
+  </a>
+
+  <a href="youngestPets" class="hide-link">
+    <button class="btn mb-2 editbtn" style="margin-right: 1%">Youngest pets</button>
+  </a>
+
+  <a href="oldestPets" class="hide-link">
+    <button class="btn mb-2 editbtn" style="margin-right: 1%">Oldest pets</button>
+  </a>
+
+  <a href="longestStay" class="hide-link">
+    <button class="btn mb-2 editbtn" style="margin-right: 1%">Longest stay</button>
+  </a>
+
+  <a href="shortestStay" class="hide-link">
+    <button class="btn mb-2 editbtn" style="margin-right: 1%">Shortest stay</button>
+  </a>
+
+  <a href="/" class="hide-link">
+    <button class="btn mb-2 editbtn" style="margin-right: 1%">All pets</button>
+  </a>
+
+</div>
+
+<div class="container text-center" style="border: solid; border-width: 1px; width: 80%; height:1000px; overflow-y: scroll;">
+  <div class="text-center" style="padding: 10px 20px 10px 20px">
+    Pets available for adoption
+  </div>
+  <div class="px-1 md:px-4">
+    <div class="w-full h-full">
+      <div class="w-full h-full">
+        <div class="mb-8">
+
+          <!---
+          <div class="dropdown py-3">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Filter Btn
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <a class="dropdown-item" href="#">Action</a>
+              <a class="dropdown-item" href="#">Another action</a>
+              <a class="dropdown-item" href="#">Something else here</a>
+              <a class="dropdown-item" href="cats">Cats</a>
+              <a class="dropdown-item" href="dogs">Dogs</a>
+              <a class="dropdown-item" href="otherPets">Other Pets</a>
+              <a class="dropdown-item" href="youngestPets">Youngest to Oldest</a>
+              <a class="dropdown-item" href="oldestPets">Oldest to Youngest</a>
+              <a class="dropdown-item" href="femalePets">Female Pets</a>
+              <a class="dropdown-item" href="malePets">Male Pets</a>
+            </div>
+          </div>
+        -->
+
+        <div class="row md:flex flex-wrap items-start flex">
+          <!-- Determine which pets to show on page (based on filter) -->
+          {% if filterType == 'youngToOld' %}
+          {% set allPets = youngestOrderPets %}
+          {% elif filterType == 'oldToYoung' %}
+          {% set allPets = oldestOrderPets %}
+          {% elif filterType == 'female' %}
+          {% set allPets = femalePets %}
+          {% elif filterType == 'male' %}
+          {% set allPets = malePets %}
+          {% elif filterType == 'dogs' %}
+          {% set allPets = dogs %}
+          {% elif filterType == 'cats' %}
+          {% set allPets = cats %}
+          {% elif filterType == 'otherPets' %}
+          {% set allPets = otherPets %}
+          {% elif filterType == 'shortToLongStay' %}
+          {% set allPets = shortestStayOrderPets %}
+          {% elif filterType == 'longToShortStay' %}
+          {% set allPets = longestStayOrderPets %}
+          {% elif filterType == 'babyPets' %}
+          {% set allPets = babyPets %}
+          {% elif filterType == 'youngPets' %}
+          {% set allPets = youngPets %}
+          {% elif filterType == 'adultPets' %}
+          {% set allPets = adultPets %}
+          {% elif filterType == 'seniorPets' %}
+          {% set allPets = seniorPets %}
+          {% else %}
+          {% set allPets = all_pets %}
+          {% endif %}
+          
+          {% for pet in allPets %}
+          {% if pet['status'] != 'adopted' %}
+          <div class="col-sm-3 px-1 my-4 ">
+            <!-- Added hide-link class soo= the names of the pets don't show up as link -->
+            <a href="{{ url_for('petprofile', pid=pet['pid']) }} " class="hover:opacity-20 hide-link">
+              <div class="image_with_badge_container">
+                <img class="w-full border border-dark" src="static/images/{{pet['image']}}" id="#myimg" style="width: 200px; "alt="preview photo">
+                {% if pet['status'] == 'pre-adopted' %}
+                <span class="badge badge-on-image">pre-adopted</span>
+                {% endif%}
+              </div>
+              <div class="text-center text-gray-500 mt-2"> {% if pet %} {{ pet['pname']}} {% endif %} </div>
+            </a>
+          </div>
+          {% endif %}
+          {% endfor %}
+          {% set allPets = all_pets %}
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+</div>
+</div>
+
+{% endblock %}

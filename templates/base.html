@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--Allows extending -->
+    <title>{% block title %} {% endblock %}</title>
+     <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Courgette&family=Gloria+Hallelujah&family=Montserrat:ital,wght@0,100;1,500&family=Raleway:ital,wght@0,100;1,600&family=Source+Sans+Pro:wght@300&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <style>
+        .menu {
+            background-color: #3079a1;
+            margin: auto auto 50px auto;
+            padding: 30px;
+        }
+
+        .column {
+            padding-bottom: 25px;
+        }
+
+
+        .petlabel {
+            font-family: 'Gloria Hallelujah', cursive;
+            font-size: 30px;
+        }
+
+        body {
+            background-color: #f1e7bd;
+        }
+
+        .editbtn {
+            background-color: #DAEAF1;
+            border-color: #3079a1;
+            color: black;
+        }
+
+        .editbtn:hover {
+            background-color: #FEF9A7;
+            color: black;
+        }
+
+        .table {
+            padding: 10px;
+            outline-style: solid;
+            outline-width: 1px;
+            outline-color: #3079a1;
+        }
+
+        .nav-tabs {
+            border-color: #3079a1;
+        }
+
+        .nav {
+            --bs-nav-link-color: #3079a1;
+            --bs-nav-link-hover-color: red;
+        }
+
+        .nav-tabs {
+            --bs-nav-tabs-link-hover-border-color: #3079a1;
+
+        }
+
+        /* Hides link, just shows text (doesn't underline and make the text blue) */
+        .hide-link, .hide-link:hover 
+        {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .image_with_badge_container {
+            display: inline-block;
+            position: relative;
+            margin-bottom: 5px;
+        }
+
+        .badge-on-image {
+            position: absolute;
+            top: 3px;
+            right: 3px;
+            padding: 3px 6px;
+            background-color: yellow;
+            color: black;
+            font-size: 15px;
+        }
+        #myimg {
+            width: 250px;
+        }
+        .img-responsive {
+    width: auto;
+    height: 150px;
+}
+
+    .searchboxName
+    {
+        font-size: 90%; 
+        width: 20%;
+        margin-bottom: 1%;
+    }
+
+    .smallButton
+    {
+        font-size: 70%;
+        margin-bottom: 1%;
+        margin-left: 0.5%;
+    }
+
+    </style>
+
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark menu" style="padding: 25px 75px; ">
+
+        <a class="navbar-brand petlabel" href=" {{ url_for('index') }} ">Pet Haven of Tampa Bay</a>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse navbar-custom justify-content-end" id="navbar">
+            <div class="navbar-nav ml-auto">
+                <a class = "nav-item nav-link" id="home" href="/">Home</a>
+                
+               <!-- <a class = "nav-item nav-link" id="volunteer" href="/volunteer">Apply to Volunteer</a>
+        -->
+                <a class = "nav-item nav-link" id="myaccount" href="/myaccount">My Account</a>
+                
+                {% if user %}
+                <a class = "nav-item nav-link" id="logout" href="/logout">Logout</a>
+                {% else %}
+                <a class = "nav-item nav-link" id="login" href="/login">Login</a>
+                
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+<!-- ********************* TO UPDATE ****************************** -->
+
+    <div class="container">
+        {% block content %}
+        {% endblock %}
+    </div>
+
+<!-- *********************888888888888****************************** -->
+
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js" integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-kjU+l4N0Yf4ZOJErLsIcvOU2qSb74wXpOhqTvwVx3OElZRweTnQ6d31fXEoRD1Jy" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+
+</body>
+</html>
